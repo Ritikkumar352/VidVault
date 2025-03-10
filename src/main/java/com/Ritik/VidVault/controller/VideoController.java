@@ -8,12 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
 public class VideoController {
 
     @Autowired
@@ -22,37 +23,27 @@ public class VideoController {
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> upload(@RequestParam("file") MultipartFile file) {
         String message = videoService.upload(file);
-        return getMapRes(message,"Failed to upload video file");
+        return getMapRes(message, "Failed to upload video file");
     }
-
 
 
     @PostMapping("/delete/{id}")
     public ResponseEntity<Map<String, String>> deleteVideo(@PathVariable String id) {
         String message = videoService.deleteVideo(id);
-        return getMapRes(message,"Successfully deleted video");
+        return getMapRes(message, "Failed to deleted video");
     }
-
-
-
-
-
-
-
-
 
 
     // map response genertor
-    private ResponseEntity<Map<String,String>> getMapRes(String msg,String errMsg){
-        Map<String,String> res= new HashMap<>();
-        if(msg!=null && !msg.equals("")){
-            res.put("message",msg);
-            return new ResponseEntity<>(res,HttpStatus.OK);
-        }else{
-            res.put("message",errMsg);
-            return new ResponseEntity<>(res,HttpStatus.INTERNAL_SERVER_ERROR);
+    private ResponseEntity<Map<String, String>> getMapRes(String msg, String errMsg) {
+        Map<String, String> res = new HashMap<>();
+        if (msg != null && !msg.equals("")) {
+            res.put("message", msg);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        } else {
+            res.put("message", errMsg);
+            return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 }

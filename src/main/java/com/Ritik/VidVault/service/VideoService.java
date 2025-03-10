@@ -19,19 +19,22 @@ public class VideoService {
     public String upload(MultipartFile file) {
         String filename = file.getOriginalFilename();
         // TODO implement upload logic
-        if(filename!=null){
+        String url="alkndnf";  // get fron gcp
+
+        if(url!=null){
             return "Video successfully uploaded!";
         }
-
-
-        return "uploaded";
-
+        return null;  // null--> "failed to perform operation"... handeled in controller
     }
 
     public String deleteVideo(String id) {
-
         // TODO implement delete logic
-        return "success:- Video deleted";
+
+        String url="abc";
+        if(url!=null){
+            return "Video successfully deleted!";
+        }
+        return null;   // null--> failed to perform operation... handeled in controller
     }
 }
 
