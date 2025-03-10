@@ -13,7 +13,6 @@ public class Video {
     private String title;
     private String description;
     private String url;
-
     @Column(name = "uploadedAt")
     private LocalDateTime uploadedAt;
     // first complete these ...above
