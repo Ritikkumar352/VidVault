@@ -20,19 +20,39 @@ public class VideoController {
     VideoService videoService;
 
     @PostMapping("/upload")
-    public ResponseEntity <Map<String, String>> upload(@RequestParam("file") MultipartFile file) {
-       String message= videoService.upload(file);
-        Map<String,String> map=new HashMap<>();
-        map.put("message",message);
-        return new ResponseEntity<>(map, HttpStatus.OK);
+    public ResponseEntity<Map<String, String>> upload(@RequestParam("file") MultipartFile file) {
+        String message = videoService.upload(file);
+        return getMapRes(message,"Failed to upload video file");
     }
 
+
+
     @PostMapping("/delete/{id}")
-    public ResponseEntity <Map<String, String>> deleteVideo(@PathVariable String id) {
-        String message=videoService.deleteVideo(id);
-        Map<String,String> map=new HashMap<>();
-        map.put("message",message);
-        return new ResponseEntity<>(map, HttpStatus.OK);
+    public ResponseEntity<Map<String, String>> deleteVideo(@PathVariable String id) {
+        String message = videoService.deleteVideo(id);
+        return getMapRes(message,"Successfully deleted video");
     }
+
+
+
+
+
+
+
+
+
+
+    // map response genertor
+    private ResponseEntity<Map<String,String>> getMapRes(String msg,String errMsg){
+        Map<String,String> res= new HashMap<>();
+        if(msg!=null && !msg.equals("")){
+            res.put("message",msg);
+            return new ResponseEntity<>(res,HttpStatus.OK);
+        }else{
+            res.put("message",errMsg);
+            return new ResponseEntity<>(res,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

@@ -18,10 +18,11 @@ public class VideoService {
 
     public String upload(MultipartFile file) {
         String filename = file.getOriginalFilename();
-
-
-
         // TODO implement upload logic
+        if(filename!=null){
+            return "Video successfully uploaded!";
+        }
+
 
         return "uploaded";
 
