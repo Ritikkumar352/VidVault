@@ -38,3 +38,4 @@ build/
 *.json
 
 /config/videoupload-453311-0748888572ad.json
+config/videoupload-*.json
