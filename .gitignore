@@ -32,9 +32,9 @@ build/
 ### VS Code ###
 .vscode/
 
+### GCP ###
 
-### GCP
+*.env
+*.json
 
-src/main/resources/*.json
-.env
-
+/config/videoupload-453311-0748888572ad.json

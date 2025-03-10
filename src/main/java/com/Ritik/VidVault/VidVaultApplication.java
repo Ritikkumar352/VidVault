@@ -11,6 +11,7 @@ public class VidVaultApplication {
 		SpringApplication.run(VidVaultApplication.class, args);
 		Dotenv dotenv = Dotenv.load();
 		System.setProperty("GOOGLE_APPLICATION_CREDENTIALS", dotenv.get("GOOGLE_APPLICATION_CREDENTIALS"));
+		System.out.println("GCP Credentials Path: " + System.getenv("GOOGLE_APPLICATION_CREDENTIALS"));
 
 	}
 
