@@ -30,7 +30,8 @@ public class VideoService {
     public String upload(MultipartFile file) {
         // TODO implement upload logic
         // TODO add check for upload file video only... if required
-        String fileURL=null;
+        String fileURL = null;
+        Blob blob = null;
 
         // get details from the uploaded file-- offline file
         long size = file.getSize();  // in bytes or bits ? check
@@ -54,28 +55,36 @@ public class VideoService {
             BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(contentType).build();
 
             // upload
-            Blob blob = storage.create(blobInfo, file.getBytes());
+            blob = storage.create(blobInfo, file.getBytes());
 
 //            file  url
             fileURL = "https://storage.googleapis.com/" + bucketName + "/" + fileName;
             System.out.println(fileURL);
+            System.out.println("all info in blob ,, of uploaded file " + blob.getMediaLink() + " - media link from blob obj " + blob.getContentType() + " - content type" + blob.getSize() + " - size of uploaded file");
+            // !!!! this link .getMediaLink is directly downloading file !!!!!!!!!!!!!!!.. and fileURL is to watch ... use these to add download feature using download btn
+            // use blob.getSize() to show size of video
             System.out.println(contentType);
 //            return "Video Uploaded Successfully!! URL ->>  "+ fileURL;
         } catch (IOException e) {
-            System.out.println("Error while uploading -->>"+ e.getMessage());
+            System.out.println("Error while uploading -->>" + e.getMessage());
             e.printStackTrace();
             return null;
         }
 
-        return "video Uploaded !! URL ->> "+fileURL;
+        // TODO -> save these info in postgreSQL
+
+        // if upload successfull now save to sql db
+
+        return "video Uploaded !! URL to wathc  ->> " + fileURL + " url to download " + blob.getMediaLink();
+
 //        return (fileURL != null) ? "video uploded" : null;
         // null--> "failed to perform operation"... handeled in controller
-
 
     }
 
     public String deleteVideo(String id) {
         // TODO implement delete logic
+
 
         String url = "abc";
         if (url != null) {
