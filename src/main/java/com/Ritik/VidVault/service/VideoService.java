@@ -28,8 +28,9 @@ public class VideoService {
     private final String bucketName = "videoupload352";
 
     public String upload(MultipartFile file) {
+        // TODO implement upload logic
+        // TODO add check for upload file video only... if required
         String fileURL=null;
-
 
         // get details from the uploaded file-- offline file
         long size = file.getSize();  // in bytes or bits ? check
@@ -70,7 +71,6 @@ public class VideoService {
 //        return (fileURL != null) ? "video uploded" : null;
         // null--> "failed to perform operation"... handeled in controller
 
-        // TODO implement upload logic
 
     }
 
