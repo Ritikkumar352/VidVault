@@ -1,5 +1,6 @@
 package com.Ritik.VidVault.service;
 
+import com.Ritik.VidVault.entity.Video;
 import com.Ritik.VidVault.repository.VideoRepo;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -53,18 +55,17 @@ public class VideoService {
 
             BlobId blobId = BlobId.of(bucketName, fileName);
             BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(contentType).build();
-
-            // upload
-            blob = storage.create(blobInfo, file.getBytes());
+            blob = storage.create(blobInfo, file.getBytes());  // upload
 
 //            file  url
             fileURL = "https://storage.googleapis.com/" + bucketName + "/" + fileName;
             System.out.println(fileURL);
-            System.out.println("all info in blob ,, of uploaded file " + blob.getMediaLink() + " - media link from blob obj " + blob.getContentType() + " - content type" + blob.getSize() + " - size of uploaded file");
+            System.out.println("blob.getNmae()-> " + blob.getName() + " all info in blob ,, of uploaded file " + blob.getMediaLink() + " - media link from blob obj " + blob.getContentType() + " - content type" + blob.getSize() + " - size of uploaded file");
             // !!!! this link .getMediaLink is directly downloading file !!!!!!!!!!!!!!!.. and fileURL is to watch ... use these to add download feature using download btn
             // use blob.getSize() to show size of video
             System.out.println(contentType);
 //            return "Video Uploaded Successfully!! URL ->>  "+ fileURL;
+
         } catch (IOException e) {
             System.out.println("Error while uploading -->>" + e.getMessage());
             e.printStackTrace();
@@ -72,13 +73,47 @@ public class VideoService {
         }
 
         // TODO -> save these info in postgreSQL
-
         // if upload successfull now save to sql db
 
-        return "video Uploaded !! URL to wathc  ->> " + fileURL + " url to download " + blob.getMediaLink();
+        Video saved=saveVideo(blob);
+        if(saved==null){
+            System.out.println("save to sql db failed");
+            return null;
+        }
+
+        return "video Uploaded and saved to sql db !! URL to wathc  ->> " + fileURL + " url to download " + blob.getMediaLink();
 
 //        return (fileURL != null) ? "video uploded" : null;
         // null--> "failed to perform operation"... handeled in controller
+    }
+
+    public Video saveVideo(Blob blob) {
+        Video video = new Video();
+//        long id  =  ?? -- use blobId to del
+        String title = blob.getName();
+        String watchUrl = "https://storage.googleapis.com/" + bucketName + "/" + title;
+        String downloadUrl = blob.getMediaLink();
+        String name = blob.getName();   // uploaded File name
+        long size = (blob.getSize()) / 1024; //--> in kb
+        String format = blob.getContentType();
+//       String duration
+
+        video.setTitle(title);
+        video.setUrl(watchUrl);
+        video.setDownlaodUrl(downloadUrl);
+        video.setSize(size);
+        video.setFormat(format);
+
+        /* Optional ? */
+        Video savedVdData = null;
+        try {
+            savedVdData = videoRepo.save(video);
+
+        } catch (Exception e) {
+            System.out.println("Error while saving video to sql db" + e.getMessage());
+        }
+
+        return savedVdData;
 
     }
 
