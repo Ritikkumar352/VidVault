@@ -156,8 +156,19 @@ public class VideoService {
 
         // TODO -- deleted from clloud now delete that video data from db also
 
+        if(res){
+            String dbDelete=deleteFromDb(id);
+        }
+
         return (res) ? "video deleted.." : null;
     }
+
+    public String deleteFromDb(long id) {
+        videoRepo.deleteById(id);
+        return "video deleted.. from db";
+    }
+
+
 
 }
 

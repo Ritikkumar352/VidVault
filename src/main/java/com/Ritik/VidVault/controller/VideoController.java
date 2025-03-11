@@ -25,26 +25,31 @@ public class VideoController {
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> upload(@RequestParam("file") MultipartFile file) {
         String message = videoService.upload(file);
-        return getMapRes(message, "Failed to upload video file");
+        String contentType = file.getContentType();
+        System.out.println(contentType );
+        if (contentType == null || !contentType.startsWith("video/")) {
+            return getMapRes(null,"invalid file type..Upload Video File",HttpStatus.BAD_REQUEST);
+        }
+        return getMapRes(message, "Failed to upload video file",HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Map<String, String>> deleteVideo2(@PathVariable long id) {
         String message = videoService.deleteVideo2(id);
-        return getMapRes(message, "Failed to deleted video");
+        return getMapRes(message, "Failed to deleted video",HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
     // map response genertor
-    private ResponseEntity<Map<String, String>> getMapRes(String msg, String errMsg) {
+    private ResponseEntity<Map<String, String>> getMapRes(String msg, String errMsg,HttpStatus status) {
         Map<String, String> res = new HashMap<>();
         if (msg != null && !msg.equals("")) {
             res.put("message", msg);
             return new ResponseEntity<>(res, HttpStatus.OK);
         } else {
             res.put("message", errMsg);
-            return new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(res, status);
         }
     }
 
