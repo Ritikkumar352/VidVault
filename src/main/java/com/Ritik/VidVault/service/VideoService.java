@@ -75,8 +75,8 @@ public class VideoService {
         // TODO -> save these info in postgreSQL
         // if upload successfull now save to sql db
 
-        Video saved=saveVideo(blob);
-        if(saved==null){
+        Video saved = saveVideo(blob);
+        if (saved == null) {
             System.out.println("save to sql db failed");
             return null;
         }
@@ -117,15 +117,47 @@ public class VideoService {
 
     }
 
-    public String deleteVideo(String id) {
+    public String deleteVideo(long id) {
         // TODO implement delete logic
 
+        Video delVideo = videoRepo.getById(id);  // use findById
+        String url = delVideo.getUrl();
 
-        String url = "abc";
-        if (url != null) {
-            return "Video successfully deleted!";
-        }
-        return null;   // null--> failed to perform operation... handeled in controller
+        BlobId blobId = BlobId.of(bucketName, url);
+        System.out.println(blobId + " <--bloadid--");
+        System.out.println(blobId.getName());
+//        boolean res = storage.delete(BlobId.of(bucketName, url));
+        boolean res = storage.delete(blobId.getName());
+
+//        if(res){
+//            return "Video deleted ...";
+//        }
+//        return null;
+        return (res) ? "video deleted.." : null;
+//        String url = "abc";
+//        if (url != null) {
+//            return "Video successfully deleted!";
+//        }
+//        return null;   // null--> failed to perform operation... handeled in controller
     }
+
+    public String deleteVideo2(long id) {
+        Optional<Video> delVideo = videoRepo.findById(id);
+        boolean res = false;
+        if (delVideo.isPresent()) {
+            Video video = delVideo.get();
+            String title = video.getTitle(); // title-- obj name
+//            String url = video.getUrl();
+//            System.out.println("trying to delete");
+//            System.out.println("url->> " + url);
+//            System.out.println("title->> " + title);
+            res = storage.delete(bucketName, title);
+        }
+
+        // TODO -- deleted from clloud now delete that video data from db also
+
+        return (res) ? "video deleted.." : null;
+    }
+
 }
 

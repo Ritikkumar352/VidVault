@@ -29,9 +29,9 @@ public class VideoController {
     }
 
 
-    @PostMapping("/delete/{id}")
-    public ResponseEntity<Map<String, String>> deleteVideo(@PathVariable String id) {
-        String message = videoService.deleteVideo(id);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Map<String, String>> deleteVideo2(@PathVariable long id) {
+        String message = videoService.deleteVideo2(id);
         return getMapRes(message, "Failed to deleted video");
     }
 
