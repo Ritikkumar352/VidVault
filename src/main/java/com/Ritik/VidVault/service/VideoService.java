@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class VideoService {
@@ -169,6 +166,14 @@ public class VideoService {
     }
 
 
+    public List<Video> getAllVideos() {
+        List<Video> videos=videoRepo.findAll();
+        for(Video i:videos){
+            System.out.println(i+" <-videos");
+        }
 
+        return videos;
+
+    }
 }
 

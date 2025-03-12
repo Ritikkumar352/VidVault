@@ -1,7 +1,7 @@
 # VidVault 
 
-- By default in Spring boot max file size is 1MB and re size is 10 mb
-- Increased it to 50 MB in this project
+- By default in Spring boot max file size is 1MB and res size is 10 MB
+- Increased it to 50 MB in this project... tested upto approx 100MB 
 - eraser.io -> steps and diagram https://app.eraser.io/workspace/WBak7oEnw9g7pNnUSWc3?origin=share
 
 - crrently it's uploading all types of file, if neededd try to change to video only
@@ -34,5 +34,7 @@ Blob blob=storage.create(blobInfo,file.getBytes());
     storage.delete(blobId); 
 ```
 - ?? -> blob.getBlobId  ?
+
+
 
 
