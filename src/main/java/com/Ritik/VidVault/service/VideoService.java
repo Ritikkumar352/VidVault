@@ -27,6 +27,8 @@ public class VideoService {
     private final String bucketName = "videoupload352";
 
     public String upload(MultipartFile file) {
+        // remove this logg
+        System.out.println("GOOGLE_APPLICATION_CREDENTIALS: " + System.getenv("GOOGLE_APPLICATION_CREDENTIALS"));
         // TODO implement upload logic
         // TODO add check for upload file video only... if required
         String fileURL = null;
