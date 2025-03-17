@@ -4,6 +4,7 @@ EXPOSE 443
 RUN mkdir /etc/ssl/cloudflare
 COPY config/origin.crt /etc/ssl/cloudflare/origin.crt
 COPY config/origin.key /etc/ssl/cloudflare/origin.key
+COPY target/VidVault-0.0.1-SNAPSHOT.jar app.jar
 
 WORKDIR /app
 ENTRYPOINT ["java","-jar","app.jar"]
