@@ -170,9 +170,9 @@ public class VideoService {
 
     public List<Video> getAllVideos() {
         List<Video> videos=videoRepo.findAll();
-        for(Video i:videos){
-            System.out.println(i+" <-videos");
-        }
+//        for(Video i:videos){
+//            System.out.println(i+" <-videos");
+//        }
 
         return videos;
 

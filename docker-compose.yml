@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   postgres_con:
@@ -15,19 +14,25 @@ services:
       - my-network
 
   vidvault_con:
-    image: vidvault_img
+    depends_on:
+      - postgres_con
+    image: ritikkumar352/vidvault_img
     container_name: vidvault_con
     ports:
-      - "8080:8080"
+      - "443:443"
+#      - "8080:8080"
     volumes:
       - ./config/videoupload-453311-0748888572ad.json:/app/config/videoupload-453311-0748888572ad.json  # Mount the JSON file
+      - ./src/main/resources:/app/resources
+      - ./config/origin.crt:/etc/ssl/cloudflare/origin.crt  # to mount SSL cert
+      - ./config/origin.key:/etc/ssl/cloudflare/origin.key  # to mount SSL key
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: "/app/config/videoupload-453311-0748888572ad.json"  # Set the env variable
     networks:
       - my-network
-    depends_on:
-      - postgres_con
+
 
 networks:
   my-network:
     name: my-network
+
