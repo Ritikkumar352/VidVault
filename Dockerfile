@@ -1,4 +1,4 @@
-FROM openjdk:17-oracle
+FROM openjdk:17-slim
 COPY target/*.jar app.jar
 EXPOSE 443
 RUN mkdir /etc/ssl/cloudflare

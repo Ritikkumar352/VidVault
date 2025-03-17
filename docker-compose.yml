@@ -17,7 +17,7 @@ services:
     depends_on:
       - postgres_con
 #    image: ritikkumar352/vidvault_img
-    build: . # Build from the cloned GitHub repo instead if pull from DockerHub
+    build: . # Build from the cloned GitHub repo instead if pull from DockerH
     container_name: vidvault_con
     ports:
       - "443:443"
