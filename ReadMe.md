@@ -1,6 +1,14 @@
 # Deploy-branch test
 # VidVault 
 
+* Instructions
+  - make a config foler in the root directory 
+  - upload 3 files to it 
+  1. .json file
+  2. .key
+  3. .ctr
+
+
 - By default in Spring boot max file size is 1MB and res size is 10 MB
 - Increased it to 50 MB in this project... tested upto approx 100MB 
 - eraser.io -> steps and diagram https://app.eraser.io/workspace/WBak7oEnw9g7pNnUSWc3?origin=share

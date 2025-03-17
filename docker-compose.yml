@@ -25,8 +25,8 @@ services:
     volumes:
       - ./config/videoupload-453311-0748888572ad.json:/app/config/videoupload-453311-0748888572ad.json  # Mount the JSON file
       - ./src/main/resources:/app/resources
-      - ./config/origin.crt:/etc/ssl/cloudflare/origin.crt  # to mount SSL cert
-      - ./config/origin.key:/etc/ssl/cloudflare/origin.key  # to mount SSL key
+#      - ./config/origin.crt:/etc/ssl/cloudflare/origin.crt  # to mount SSL cert
+#      - ./config/origin.key:/etc/ssl/cloudflare/origin.key  # to mount SSL key
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: "/app/config/videoupload-453311-0748888572ad.json"  # Set the env variable
     networks:

@@ -41,3 +41,5 @@ build/
 config/videoupload-*.json
 config/videoupload-*.json
 data/
+origin.crt
+origin.key
