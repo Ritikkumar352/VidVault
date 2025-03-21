@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres_con:
     image: postgres:15
@@ -13,20 +11,34 @@ services:
       - ./data:/var/lib/postgresql/data
     networks:
       - my-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   vidvault_con:
+    depends_on:
+      postgres_con:
+        condition: service_healthy
     image: vidvault_img
     container_name: vidvault_con
     ports:
       - "8080:8080"
     volumes:
-      - ./config/videoupload-453311-0748888572ad.json:/app/config/videoupload-453311-0748888572ad.json  # Mount the JSON file
+      - ./config/videoupload-453311-0748888572ad.json:/app/config/videoupload-453311-0748888572ad.json
+      - ./src/main/resources:/app/resources
     environment:
-      GOOGLE_APPLICATION_CREDENTIALS: "/app/config/videoupload-453311-0748888572ad.json"  # Set the env variable
+      GOOGLE_APPLICATION_CREDENTIALS: "/app/config/videoupload-453311-0748888572ad.json"
     networks:
       - my-network
-    depends_on:
-      - postgres_con
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s # Increased start_period to 60s
+    command: sh -c "sleep 10; java -jar /app.jar" # Added explicit wait
 
 networks:
   my-network:
