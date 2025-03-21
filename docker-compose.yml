@@ -28,6 +28,7 @@ services:
     volumes:
       - ./config/videoupload-453311-0748888572ad.json:/app/config/videoupload-453311-0748888572ad.json
       - ./src/main/resources:/app/resources
+      - /etc/ssl/cloudflare:/etc/ssl/cloudflare # 🔥 SSL certificate
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: "/app/config/videoupload-453311-0748888572ad.json"
     networks:
