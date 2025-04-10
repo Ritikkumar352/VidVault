@@ -1,3 +1,4 @@
+- Using AWS -> https://github.com/Ritikkumar352/AWSbucket
 # VidVault 
 
 - By default in Spring boot max file size is 1MB and res size is 10 MB
