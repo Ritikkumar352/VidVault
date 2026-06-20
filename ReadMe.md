@@ -1,4 +1,4 @@
-# This repo has code which Uses GCP, while for learing AWS S3 I build the same which use S3
+# This repo has code which Uses GCS (Google Cloud Storage), I build the same which uses S3
 - Using AWS -> https://github.com/Ritikkumar352/AWSbucket
 # VidVault 
 
